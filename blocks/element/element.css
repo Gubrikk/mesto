@@ -1,0 +1,14 @@
+@import url(__image/element__image.css);
+@import url(__info-name/element__info-name.css);
+@import url(__info-like/element__info-like.css);
+@import url(__info/element__info.css);
+
+.element {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    overflow: hidden;
+    max-height: 361px;
+    max-width: 282px;
+    align-self: center;
+    justify-self: center;
+}

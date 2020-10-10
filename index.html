@@ -4,58 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Место России</title>
-    <link rel="normalize" href="./vendor/normalize.css">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="../mesto/pages/index.css">
 </head>
 <body class="page">
     <div class="main">
         <header class="header">
-            <img class="header__logo" src="images/Vector.png" alt="Место России">
-            <hr class="header__line">
+            <img class="header__logo" src="images/Vector logo.svg" alt="Место России">
         </header>
 
         <section class="profile">
             <div class="profile__avatar">
-                <img class="profile__avatar_ellipse" src="images/image.jpg" alt="Фото">
+                <img class="profile__avatar-ellipse" src="images/image.jpg" alt="Фото">
             </div>
             <div class="profile__info">
-                <h1 class="profile__title">Жак-Ив Кусто</h1>
-                <button type="button" class="profile__edit-button"></button>
-                <p class="profile__subtitle">Исследователь океана</p>
+                <div class="profile__name-container">
+                    <h1 class="profile__name">Жак-Ив Кусто</h1>
+                    <button type="button" class="profile__edit-button"></button>
+                </div>
+                <p class="profile__job">Исследователь океана</p>
             </div>
             <button type="button" class="profile__add-button"></button>
         </section>
 
         <section class="elements">
             <div class="element"> 
-                <img class="element__image" src="images/kirill-pershin-1556355-unsplash.png" alt="Фото">
-                <h2 class="element__title">озеро Байкал</h2>
+                <img class="element__image" src="images/baikal.jpeg" alt="Фото">
+                <div class="element__info">
+                    <h2 class="element__info-name">озеро Байкал</h2>
+                    <button type="button" class="element__info-like"></button>
+                </div>
             </div>
             <div class="element"> 
-                <img class="element__image" src="images/kirill-pershin-1556355-unsplash.png" alt="Фото">
-                <h2 class="element__title">Гора Эльбрус</h2>
+                <img class="element__image" src="images/elbrus.jpg" alt="Фото">
+                <div class="element__info">
+                    <h2 class="element__info-name">Гора Эльбрус</h2>
+                    <button type="button" class="element__info-like"></button>
+                </div>
             </div>
             <div class="element"> 
-                <img class="element__image" src="images/kirill-pershin-1556355-unsplash.png" alt="Фото">
-                <h2 class="element__title">Домбай</h2>
+                <img class="element__image" src="images/donbai.jfif" alt="Фото">
+                <div class="element__info">
+                    <h2 class="element__info-name">Домбай</h2>
+                    <button type="button" class="element__info-like"></button>
+                </div>
             </div>
             <div class="element"> 
-                <img class="element__image" src="images/kirill-pershin-1556355-unsplash.png" alt="Фото">
-                <h2 class="element__title">Гора Эльбрус</h2>
+                <img class="element__image" src="images/kurshskaya kosa.jpg" alt="Фото">
+                <div class="element__info">
+                    <h2 class="element__info-name">Куршская коса</h2>
+                    <button type="button" class="element__info-like"></button>
+                </div>
             </div>
             <div class="element"> 
-                <img class="element__image" src="images/kirill-pershin-1556355-unsplash.png" alt="Фото">
-                <h2 class="element__title">Шиханы</h2>
+                <img class="element__image" src="images/shihany.jpg" alt="Фото">
+                <div class="element__info">
+                    <h2 class="element__info-name">Шиханы</h2>
+                    <button type="button" class="element__info-like"></button>
+                </div>
             </div>
             <div class="element"> 
-                <img class="element__image" src="images/kirill-pershin-1556355-unsplash.png" alt="Фото">
-                <h2 class="element__title">Рускеала</h2>
+                <img class="element__image" src="images/ruskeala.jpg" alt="Фото">
+                <div class="element__info">
+                    <h2 class="element__info-name">Рускеала</h2>
+                    <button type="button" class="element__info-like"></button>
+                </div>
             </div>
         </section>
 
         <footer class="footer">
             <p class="footer__copyright">© 2020 Mesto Russia</p>
         </footer>
+
+        <section class="popup">
+            <form class="popup__container">
+                <img src="./images/Close Icon.svg" alt="Иконка закрытия" class="popup__close-icon">
+                <p class="popup__title">Редактировать профиль</p>
+                <input  type="text"
+                        class="popup__field popup__field-name"
+                        id="name"
+                        name="name"
+                        placeholder="Имя"
+                        maxlength="20"
+                        required>
+                
+                <input  type="text"
+                        class="popup__field popup__field-job"
+                        id="job"
+                        name="job"
+                        placeholder="Работа"
+                        maxlength="20"
+                        required>
+
+                <button type="submit" class="popup__submit-button">Сохранить</button>
+            </form>
+        
+        </section>
+
     </div>
+    <script src="../mesto/scripts/scripts.js"> </script>
 </body>
 </html>
