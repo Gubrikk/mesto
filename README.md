@@ -14,7 +14,7 @@
 ----------------------------------------------------------------------------------------
 
 #### Ссылка на макет:  https://www.figma.com/file/StZjf8HnoeLdiXS7dYrLAh/JavaScript.-Sprint-4
-#### Ссылка по проект: https://gubrikk.github.io/mesto/
+#### Ссылка по проект: https://gubrikk.github.io/mesto/index.html
 
 
 Название файла  | Содержание файла
