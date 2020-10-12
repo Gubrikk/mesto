@@ -7,14 +7,17 @@ const profileName = document.querySelector('.profile__name')
 const profileJob = document.querySelector('.profile__job')
 const popupSubmit = document.querySelector('.popup__submit-button')
 
+let profileForm = document.querySelector('.popup__container')
+let nameInput = document.querySelector('.popup__field-name')
+let jobInput = document.querySelector('.popup__field-job')
+
 // Открытие и закрытие popup формы
 
 const popupToggle = () => {
-    popup.classList.toggle('popup__is-opened')
-}
+    popup.classList.toggle('popup_opened')
 
-buttonOpenPopup.addEventListener ('click', popupToggle)
-buttonClosePopup.addEventListener ('click', popupToggle)
+    console.log(popup.classList.contains('popup_opened'))
+}
 
 // Закрытие popup'a при клике вне формы
 
@@ -25,22 +28,17 @@ const onClickPopupBackgroundListener = (event) => {
     popupToggle()
 }
 
+buttonOpenPopup.addEventListener ('click', popupToggle)
+buttonClosePopup.addEventListener ('click', popupToggle)
+
+
 // Сохранение новых значений при нажатии на submit
-
-popup.addEventListener('click', onClickPopupBackgroundListener)
-
-let profileForm = document.querySelector('.popup__container')
 
 function formSubmitHandler (evt) {
     evt.preventDefault();
 
-    let nameInput = document.querySelector('.popup__field-name')
-    let jobInput = document.querySelector('.popup__field-job')
-
     profileName.textContent = nameInput.value
     profileJob.textContent = jobInput.value
-
-    buttonClosePopup.addEventListener ('click', popupToggle)
 
     popupToggle()
 
@@ -48,6 +46,7 @@ function formSubmitHandler (evt) {
 
 // Обработчик событий
 
+popup.addEventListener('click', onClickPopupBackgroundListener)
 profileForm.addEventListener('submit', formSubmitHandler);
 
 

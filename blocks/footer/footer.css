@@ -1,5 +1,10 @@
 @import url(./__copyright/footer__copyright.css);
 
+.footer {
+    flex-shrink: 0;
+    padding-bottom: 60px;
+}
+
 @media (max-width: 882px) {
     .footer {
         padding-right: 19px;

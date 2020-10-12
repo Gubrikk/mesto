@@ -1,20 +1,15 @@
 .elements {
     display: grid;
+    justify-content: center;
     grid-gap: 21px 18px;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, 282px);
     margin-bottom: 66px;
 }
   
   @media (max-width: 580px) {
     .elements {
       grid-template-columns: repeat(1, 1fr);
-    }
-  }
-  
-  @media (min-width: 581px) and (max-width: 882px) {
-    .elements {
-      grid-template-columns: repeat(2, 1fr);
       padding-left: 19px;
       padding-right: 19px;
     }
-}
+  }
