@@ -13,10 +13,12 @@ let jobInput = document.querySelector('.popup__field-job')
 
 // Открытие и закрытие popup формы
 
-const popupToggle = () => {
-    popup.classList.toggle('popup_opened')
-
-    console.log(popup.classList.contains('popup_opened'))
+function popupToggle () {
+    if (popup.classList.contains('popup_opened') === false) {
+        nameInput.value = profileName.textContent;
+        jobInput.value = profileJob.textContent;
+     }
+         popup.classList.toggle('popup_opened'); 
 }
 
 // Закрытие popup'a при клике вне формы
@@ -48,6 +50,4 @@ function formSubmitHandler (evt) {
 
 popup.addEventListener('click', onClickPopupBackgroundListener)
 profileForm.addEventListener('submit', formSubmitHandler);
-
-
 

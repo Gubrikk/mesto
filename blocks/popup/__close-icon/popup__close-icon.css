@@ -2,13 +2,14 @@
     height: 40px;
     width: 40px;
     background-image: url('../../../images/Close-icon.svg');
-    border: none;
     background-repeat: no-repeat;
     background-color: transparent;
     background-position: center;
+    border: none;
+    outline: none;
     position: absolute;
-    right: -42px;
-    top: -42px;
+    right: -38px;
+    top: -38px;
 }
 
 .popup__close-icon:hover {
@@ -18,9 +19,9 @@
 
 @media (max-width: 560px) {
     .popup__close-icon {
-        height: 26px;
-        width: 26px;
-        right: 5px;
-        top: -50px;
+        width: 18px;
+        height: 18px;
+        right: 10px;
+        top: -45px;
     }
 }
