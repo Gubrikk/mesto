@@ -1,4 +1,3 @@
-const popupSubmit = document.querySelector('.popup__submit-button')
 const cardsList = document.querySelector('.elements')
 const template = document.querySelector('.template')
 
@@ -15,12 +14,12 @@ const buttonCloseEditProfile = profileForm.querySelector ('.popup__close-icon_pr
 // Определение переменных popupAddCard
 
 const buttonOpenAddCard = document.querySelector ('.profile__add-button')
-const AddCardForm = document.querySelector('.popup_add-card')
-const placeInput = AddCardForm.querySelector('.popup__field_new-place')
-const imageinput = AddCardForm.querySelector('.popup__field_link-image')
-const buttonCloseAddCard = AddCardForm.querySelector ('.popup__close-icon_new-place')
+const addCardForm = document.querySelector('.popup_add-card')
+const placeInput = addCardForm.querySelector('.popup__field_new-place')
+const imageInput = addCardForm.querySelector('.popup__field_link-image')
+const buttonCloseAddCard = addCardForm.querySelector ('.popup__close-icon_new-place')
 
-// Определение переменных popupImage
+// Определение переменных popupImage 
 
 const imageForm = document.querySelector('.popup_image')
 const imagePopup = document.querySelector('.popup__preview-image')
@@ -66,7 +65,7 @@ const onClickPopupBackgroundListener = (event, popup) => {
   if(event.target !== event.currentTarget) {
       return
   }
-  popupToggle(popup)
+  popupToggle(event.currentTarget)
 }
 
 // Добавление карточки с функцией клонирования
@@ -76,13 +75,13 @@ const getCard = (data) => {
   const elementPhoto = card.querySelector('.element__image');
   elementPhoto.src = data.link;
   elementPhoto.alt = data.name;
-  card.querySelector('.element__info-name').innerText = data.name;
+  card.querySelector('.element__info-name').textContent = data.name;
   const buttonRemove = card.querySelector('.element__trash');
   const buttonLike = card.querySelector('.element__info-like');
 
   elementPhoto.addEventListener('click', () => {
     imagePopup.src = data.link;
-    popupPreviewText.innerText = data.name;
+    popupPreviewText.textContent = data.name;
     popupToggle(imageForm)
   })
 
@@ -112,11 +111,11 @@ const formAddCardSubmitHandler = (evt) => {
 
     const item = getCard({
       name: placeInput.value,
-      link: imageinput.value
+      link: imageInput.value
     });
 
     cardsList.prepend(item)
-    popupToggle(AddCardForm)
+    popupToggle(addCardForm)
 }
 
 
@@ -132,9 +131,9 @@ const renderCards = () => {
 const openPopupNewPlace = () => {
 
   placeInput.value = '';
-  imageinput.value = '';
+  imageInput.value = '';
   
-  popupToggle(AddCardForm)
+  popupToggle(addCardForm)
 }
 
 // Присвоение существующих значений в input (profileForm)
@@ -158,7 +157,7 @@ buttonOpenEditProfile.addEventListener('click', function() {
 })
 
 buttonOpenAddCard.addEventListener('click', function() {
-  openPopupNewPlace(AddCardForm)
+  openPopupNewPlace(addCardForm)
 })
 
 // Закрытие popup формы
@@ -168,7 +167,7 @@ buttonCloseEditProfile.addEventListener('click', function() {
 })
 
 buttonCloseAddCard.addEventListener('click', function() {
-  popupToggle(AddCardForm)
+  popupToggle(addCardForm)
 })
 
 buttonCloseImagePopup.addEventListener('click', function() {
@@ -178,13 +177,14 @@ buttonCloseImagePopup.addEventListener('click', function() {
 
 // Обработчики событий
 
-AddCardForm.addEventListener('submit', formAddCardSubmitHandler)
+addCardForm.addEventListener('submit', formAddCardSubmitHandler)
 profileForm.addEventListener('submit', formEditProfileSubmitHandler)
 
 
-AddCardForm.addEventListener('click', (event) => onClickPopupBackgroundListener(event, AddCardForm))
-profileForm.addEventListener('click', (event) => onClickPopupBackgroundListener(event, profileForm))
-imageForm.addEventListener('click', (event) => onClickPopupBackgroundListener(event, imageForm))
+addCardForm.addEventListener('click', onClickPopupBackgroundListener)
+profileForm.addEventListener('click', onClickPopupBackgroundListener)
+imageForm.addEventListener('click', onClickPopupBackgroundListener)
+
 
 renderCards()
 
