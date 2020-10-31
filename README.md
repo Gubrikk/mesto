@@ -15,7 +15,7 @@
 
 ----------------------------------------------------------------------------------------
 
-#### Ссылка на макет:  https://www.figma.com/file/nlYpT4VhFiwimn2YlncrcF/JavaScript.-Sprint-5?node-id=0%3A1
+#### Ссылка на макет:  https://www.figma.com/file/XNaGNEZD5NEjeyJzAT4gMb/JavaScript.-Sprint-6?node-id=0%3A1
 #### Ссылка по проект: https://gubrikk.github.io/mesto/index.html
 
 
