@@ -53,7 +53,19 @@ const initialCards = [
   }
 ]
 
-// Функция открытия/закрытия "popup" формы.
+// Функция открытия "popup" формы.
+
+const openPopup = (popup) => {
+  popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupOnEsc);
+}
+
+// Функция закрытия "popup" формы.
+
+const closePopup = (popup) => {
+  popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupOnEsc);
+}
 
 const popupToggle = (popup) => {
   popup.classList.toggle('popup_opened')
@@ -67,6 +79,15 @@ const onClickPopupBackgroundListener = (event, popup) => {
   }
   popupToggle(event.currentTarget)
 }
+
+// Проверка на закрытие popup'a при клике на ESC
+
+const closePopupOnEsc = (evt) => {
+  const activePopup = document.querySelector('.popup_opened');
+  if (evt.key === 'Escape') {
+    closePopup(activePopup);
+  };
+};
 
 // Добавление карточки с функцией клонирования
 
@@ -82,7 +103,7 @@ const getCard = (data) => {
   elementPhoto.addEventListener('click', () => {
     imagePopup.src = data.link;
     popupPreviewText.textContent = data.name;
-    popupToggle(imageForm)
+    openPopup(imageForm)
   })
 
   buttonLike.addEventListener('click', () => {
@@ -133,7 +154,7 @@ const openPopupNewPlace = () => {
   placeInput.value = '';
   imageInput.value = '';
   
-  popupToggle(addCardForm)
+  openPopup(addCardForm)
 }
 
 // Присвоение существующих значений в input (profileForm)
@@ -143,7 +164,7 @@ const openPopupEditProfile = () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 
-  popupToggle(profileForm)
+  openPopup(profileForm)
 }
 
 const handlerRemove = (event) => {
@@ -163,15 +184,15 @@ buttonOpenAddCard.addEventListener('click', function() {
 // Закрытие popup формы
 
 buttonCloseEditProfile.addEventListener('click', function() {
-  popupToggle(profileForm)
+  closePopup(profileForm)
 })
 
 buttonCloseAddCard.addEventListener('click', function() {
-  popupToggle(addCardForm)
+  closePopup(addCardForm)
 })
 
 buttonCloseImagePopup.addEventListener('click', function() {
-  popupToggle(imageForm)
+  closePopup(imageForm)
 })
 
 

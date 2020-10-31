@@ -41,16 +41,19 @@
                     id="name"
                     name="name"
                     placeholder="Имя"
-                    maxlength="20"
+                    minlength="2"
+                    maxlength="40"
                     required>
-            
+            <span id="name-error" class="error"> </span>
             <input  type="text"
                     class="popup__field popup__field-job"
                     id="job"
                     name="job"
                     placeholder="Интересы"
-                    maxlength="40"
+                    minlength="2"
+                    maxlength="200"
                     required>
+            <span id="job-error" class="error"> </span>
             <button type="submit" class="popup__submit-button">Сохранить</button>
         </form>
     </div>
@@ -72,14 +75,18 @@
                     id="new-place"
                     name="new-place"
                     placeholder="Название"
+                    minlength="2"
+                    maxlength="30"
                     required>
+            <span id="new-place-error" class="error"> </span>
             
-            <input  type="text"
+            <input  type="url"
                     class="popup__field popup__field_link-image"
                     id="link-image"
                     name="link-image"
                     placeholder="Ссылка на картинку"
                     required>
+            <span id="link-image-error" class="error"> </span>
             <button type="submit" class="popup__submit-button">Создать</button>
         </form>
     </div>
@@ -96,5 +103,6 @@
     </template>
 
     <script src="./scripts/scripts.js"> </script>
+    <script src="./scripts/validate.js"> </script>
 </body>
 </html>
