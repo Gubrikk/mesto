@@ -85,7 +85,6 @@ const enableValidation = ({formSelector, buttonSelector, ...rest}) => {
     
     });
 }
-// После сабмита отключаем кнопку. Это нужно после добавление новой каточки.
 
 enableValidation({
     formSelector: '.popup__container',
