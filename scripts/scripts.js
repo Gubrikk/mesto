@@ -67,17 +67,13 @@ const closePopup = (popup) => {
   document.removeEventListener('keydown', closePopupOnEsc);
 }
 
-const popupToggle = (popup) => {
-  popup.classList.toggle('popup_opened')
-}
-
 // Закрытие popup'a при клике вне формы
 
 const onClickPopupBackgroundListener = (event, popup) => {
   if(event.target !== event.currentTarget) {
       return
   }
-  popupToggle(event.currentTarget)
+  closePopup(event.currentTarget)
 }
 
 // Проверка на закрытие popup'a при клике на ESC
@@ -122,7 +118,7 @@ function formEditProfileSubmitHandler (evt) {
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
 
-  popupToggle(profileForm)
+  closePopup(profileForm)
 }
 
 // Добавление карточки при нажатии на submit.
@@ -136,7 +132,7 @@ const formAddCardSubmitHandler = (evt) => {
     });
 
     cardsList.prepend(item)
-    popupToggle(addCardForm)
+    closePopup(addCardForm)
 }
 
 

@@ -1,15 +1,3 @@
-// Включает кнопку submit.
-
-function enableSubmitButton() {
-    buttonElement.classList.remove(inactiveButtonClass);
-};
-
-// Отклюает кнопку submit.
-
-function disableSubmitButton() {
-    buttonElement.classList.add(inactiveButtonClass);
-};
-
 // Отображение ошибки в input.
 
 const showInputError = (formElement, inputElement, errorMessage, inputErrorClass) => {
