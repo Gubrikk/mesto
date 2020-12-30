@@ -1,7 +1,7 @@
 const cardsList = document.querySelector('.elements')
 const template = document.querySelector('.template')
 
-// Определение переменных popupEditProfile
+// Определение переменных popupEditProfile 123
 
 const buttonOpenEditProfile = document.querySelector ('.profile__edit-button')
 const profileName = document.querySelector('.profile__name')
