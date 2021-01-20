@@ -1,8 +1,18 @@
+import Card from './Card.js';
+import FormValidator from './FormValidator.js'
+
+const settings = {
+  formSelector: '.popup__container',
+  inputSelector: '.popup__field',
+  buttonSelector: '.popup__submit-button',
+  inactiveButtonClass: 'popup__submit-button_invalid',
+  inputErrorClass: 'popup__field_state_invalid',
+};
+
+const formEditProfileValidate = new FormValidator(settings, '.popup__container_profile-edit');
+const formNewPlaceValidate = new FormValidator(settings, '.popup__container_new-place');
+
 const cardsList = document.querySelector('.elements')
-const template = document.querySelector('.template')
-
-// Определение переменных popupEditProfile 123
-
 const buttonOpenEditProfile = document.querySelector ('.profile__edit-button')
 const profileName = document.querySelector('.profile__name')
 const profileJob = document.querySelector('.profile__job')
@@ -60,6 +70,14 @@ const openPopup = (popup) => {
   document.addEventListener('keydown', closePopupOnEsc);
 }
 
+// Функция открытия "popup" формы для popup_image
+
+export const openPhotoPopup = (link, name) => {
+  imagePopup.src = link;
+  popupPreviewText.innerText = name;
+  openPopup(imageForm);
+}
+
 // Функция закрытия "popup" формы.
 
 const closePopup = (popup) => {
@@ -85,30 +103,6 @@ const closePopupOnEsc = (evt) => {
   };
 };
 
-// Добавление карточки с функцией клонирования
-
-const getCard = (data) => {
-  const card = template.content.cloneNode(true);
-  const elementPhoto = card.querySelector('.element__image');
-  elementPhoto.src = data.link;
-  elementPhoto.alt = data.name;
-  card.querySelector('.element__info-name').textContent = data.name;
-  const buttonRemove = card.querySelector('.element__trash');
-  const buttonLike = card.querySelector('.element__info-like');
-
-  elementPhoto.addEventListener('click', () => {
-    imagePopup.src = data.link;
-    popupPreviewText.textContent = data.name;
-    openPopup(imageForm)
-  })
-
-  buttonLike.addEventListener('click', () => {
-    buttonLike.classList.toggle('element__info-like_active');
-  })
-  buttonRemove.addEventListener('click', handlerRemove)
-
-  return card;
-}
 
 // Сохранение новых значений при нажатии на submit
 
@@ -125,22 +119,26 @@ function formEditProfileSubmitHandler (evt) {
 
 const formAddCardSubmitHandler = (evt) => {
   evt.preventDefault();
-
-    const item = getCard({
+    const card = new Card({
       name: placeInput.value,
       link: imageInput.value
-    });
-
-    cardsList.prepend(item)
-    closePopup(addCardForm)
+    }, '.template');
+    
+    const cardElement = card.generateCard();
+    cardsList.prepend(cardElement);
+    closePopup(addCardForm);
 }
+
 
 
 // Добавление карточки в начало списка в cardsList
 
 const renderCards = () => {
-  const cards = initialCards.map(card => getCard(card));
-  cardsList.append(...cards);
+  initialCards.forEach((item) => {
+    const card = new Card(item, '.template');
+    const cardElement = card.generateCard();
+    cardsList.append(cardElement);
+  });
 }
 
 // Сбрасывание значений в input (addCardForm)
@@ -163,9 +161,6 @@ const openPopupEditProfile = () => {
   openPopup(profileForm)
 }
 
-const handlerRemove = (event) => {
-  event.target.closest('.element').remove()
-}
 
 // Вызов нужной popup формы.
 
@@ -191,6 +186,10 @@ buttonCloseImagePopup.addEventListener('click', function() {
   closePopup(imageForm)
 })
 
+// Вызов функции на проверку валидации
+
+formEditProfileValidate.enableValidation();
+formNewPlaceValidate.enableValidation();
 
 // Обработчики событий
 
