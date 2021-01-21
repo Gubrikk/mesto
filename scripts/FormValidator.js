@@ -47,7 +47,7 @@ export default class FormValidator {
 
     // Переключение кнопки submit.
 
-    _toggleButtonState() {
+    toggleButtonState() {
         if (this._hasInvalidInput(this._inputList)) {
             this._buttonElement.classList.add(this._inactiveButtonClass);
             this._buttonElement.disabled = true;
@@ -64,11 +64,11 @@ export default class FormValidator {
         this._inputList.forEach(inputElement => {
             inputElement.addEventListener('input', (evt) => {
                 this._checkInputValidity(evt.target);
-                this._toggleButtonState();
+                this.toggleButtonState();
             })
         })
         
-        this._toggleButtonState();
+        this.toggleButtonState();
     }
 
     enableValidation() {

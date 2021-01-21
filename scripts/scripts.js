@@ -1,5 +1,6 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js'
+import {initialCards} from './initial-cards.js'
 
 const settings = {
   formSelector: '.popup__container',
@@ -35,33 +36,6 @@ const imageForm = document.querySelector('.popup_image')
 const imagePopup = document.querySelector('.popup__preview-image')
 const buttonCloseImagePopup = imageForm.querySelector('.popup__close-icon_image')
 const popupPreviewText = document.querySelector('.popup__preview-text')
-
-const initialCards = [
-  {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-]
 
 // Функция открытия "popup" формы.
 
@@ -103,7 +77,6 @@ const closePopupOnEsc = (evt) => {
   };
 };
 
-
 // Сохранение новых значений при нажатии на submit
 
 function formEditProfileSubmitHandler (evt) {
@@ -126,10 +99,9 @@ const formAddCardSubmitHandler = (evt) => {
     
     const cardElement = card.generateCard();
     cardsList.prepend(cardElement);
+
     closePopup(addCardForm);
 }
-
-
 
 // Добавление карточки в начало списка в cardsList
 
@@ -147,8 +119,9 @@ const openPopupNewPlace = () => {
 
   placeInput.value = '';
   imageInput.value = '';
-  
+
   openPopup(addCardForm)
+  formNewPlaceValidate.toggleButtonState(settings.buttonSelector, true);
 }
 
 // Присвоение существующих значений в input (profileForm)
