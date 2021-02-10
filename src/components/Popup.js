@@ -1,6 +1,6 @@
 export default class Popup {
     constructor(popupSelector) {
-        this._popupSelector = popupSelector;
+        this._popup = document.querySelector(popupSelector);
         this._handleEscClose = this._handleEscClose.bind(this);
         this._closeOnOverlayClick = this._closeOnOverlayClick.bind(this);
     };
@@ -8,7 +8,7 @@ export default class Popup {
     // Открытие модального окна
     
     open() {
-        this._popupSelector.classList.add('popup_opened');
+        this._popup.classList.add('popup_opened');
         document.body.addEventListener('keydown', this._handleEscClose);
         document.body.addEventListener('click', this._closeOnOverlayClick);
     };
@@ -16,7 +16,7 @@ export default class Popup {
     // Закрытие модального окна
 
     close() {
-        this._popupSelector.classList.remove('popup_opened');
+        this._popup.classList.remove('popup_opened');
         document.body.removeEventListener('keydown', this._handleEscClose);
         document.body.removeEventListener('click', this._closeOnOverlayClick);
     };
@@ -32,7 +32,7 @@ export default class Popup {
     // Слушатели на кнопку закрытия формы
 
     setEventListeners() {
-        const closeButton = this._popupSelector.querySelector('.popup__close-icon');
+        const closeButton = this._popup.querySelector('.popup__close-icon');
         closeButton.addEventListener('click', () => {
         this.close();
         })

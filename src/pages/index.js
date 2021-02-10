@@ -1,11 +1,11 @@
-import '../pages/index.css'
-import Section from './components/Section.js';
-import Card from './components/Card.js';
-import UserInfo from './components/UserInfo.js';
-import FormValidator from './components/FormValidator.js';
-import PopupWithForm from './components/PopupWithForm.js';
-import PopupWithImage from './components/PopupWithImage.js';
-import {initialCards} from './components/initialCards.js';
+import './index.css'
+import Section from '../components/Section.js';
+import Card from '../components/Card.js';
+import UserInfo from '../components/UserInfo.js';
+import FormValidator from '../components/FormValidator.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import {initialCards} from '../components/initialCards.js';
 
 const settings = {
     formSelector: '.popup__container',
@@ -19,12 +19,12 @@ const cardsList = document.querySelector('.elements')
 const buttonOpenEditProfile = document.querySelector ('.profile__edit-button')
 const profileName = document.querySelector('.profile__name')
 const profileJob = document.querySelector('.profile__job')
-const profileForm = document.querySelector('.popup_profile-edit')
-const nameInput = profileForm.querySelector('.popup__field-name')
-const jobInput = profileForm.querySelector('.popup__field-job')
+const nameInput = document.querySelector('.popup__field-name')
+const jobInput = document.querySelector('.popup__field-job')
 const buttonOpenAddCard = document.querySelector ('.profile__add-button')
-const addCardForm = document.querySelector('.popup_add-card')
-const imageForm = document.querySelector('.popup_image')
+const profileForm = '.popup_profile-edit';
+const addCardForm = '.popup_add-card';
+const imageForm = '.popup_image';
 
 const user = new UserInfo({
     profileName,
@@ -42,42 +42,40 @@ const formEditProfileClass = new PopupWithForm({
         formEditProfileClass.close();
     }
 });
-  
+
 const formAddCardClass = new PopupWithForm({
     popupSelector: addCardForm,
     handleSubmitForm: (input) => {
-        const card = new Card({
+        const cardData = {
             name: input['new-place'],
             link: input['link-image']
-        },
-        '.template',
-        {
-            handleCardClick: (name, link) => {
-            popupImage.open(name, link);
         }
-        });
-  
-        const cardElement = card.generateCard();
+        
+        const cardElement = createCard(cardData)
         cardList.addNewItem(cardElement);
   
         formAddCardClass.close();
     }
 });
 
+const createCard = (item) => {
+    const cardInstance = new Card(item, '.template', {
+
+        handleCardClick: () => {
+        popupImage.open(item.name, item.link);
+      }
+    });
+  
+    const card = cardInstance.generateCard();
+    return card;
+  };
+
 const cardList = new Section({
-	data: initialCards,
-	renderer: (item) => {
-        const card = new Card(
-        item,
-        '.template',
-        {
-            handleCardClick: (name, link) => {
-            popupImage.open(name, link);
-        }
-        });
-        const cardElement = card.generateCard();
+    data: initialCards,
+    renderer: (item) => {
+        const cardElement = createCard(item)
         cardList.addItem(cardElement);
-	}
+    }
 },  cardsList
 );
 
@@ -89,6 +87,7 @@ buttonOpenEditProfile.addEventListener('click', () => {
 
 buttonOpenAddCard.addEventListener('click', () => {
     formAddCardClass.open();
+    formNewPlaceValidate.toggleButtonState();
 });
 
 formEditProfileValidate.enableValidation();
