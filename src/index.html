@@ -13,6 +13,7 @@
     <section class="profile">
         <div class="profile__avatar">
             <img class="profile__avatar-ellipse" src="<%=require('./images/image.jpg')%>" alt="Фото">
+            <button class="profile__avatar-edit-button" type="button" aria-label="Редактировать аватар"></button>
         </div>
         <div class="profile__info">
             <div class="profile__name-container">
@@ -63,6 +64,23 @@
             <img alt=" " src=" " class="popup__preview-image">
             <p class="popup__preview-text"></p>
         </div>
+    </div>
+
+    <div class="popup popup_edit-profile-avatar">
+        <form class="popup__container popup__container_edit-profile-avatar" name="edit-profile-avatar">
+            <button type="button" aria-label="Close" class="popup__close-icon popup__close-icon_edit-profile-avatar"></button>
+            <h5 class="popup__title">Обновить аватар</h5>
+            <input  id="avatar-edit" 
+                    type="url" 
+                    name="avatar-edit" 
+                    class="popup__field popup__field_avatar" 
+                    placeholder="Ссылка на картинку"
+                    value="" 
+                    autocomplete="off" 
+                    required>
+            <span id="avatar-edit-error" class="error"></span>
+            <button type="submit" class="popup__submit-button">Сохранить</button>
+        </form>
     </div>
 
     <div class="popup popup_add-card">

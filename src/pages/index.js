@@ -1,4 +1,5 @@
 import './index.css'
+import Api from '../components/Api.js';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import UserInfo from '../components/UserInfo.js';
@@ -15,33 +16,79 @@ const settings = {
     inputErrorClass: 'popup__field_state_invalid',
 };
 
+const profileAvatar = document.querySelector('.profile__avatar')
+const profileAvatarImage = document.querySelector('.profile__avatar-ellipse');
+const formEditProfileAvatar = document.querySelector('.popup__container_edit-profile-avatar');
+const inputAvatarImage = formEditProfileAvatar.querySelector('.popup__field_avatar');
+
 const cardsList = document.querySelector('.elements')
 const buttonOpenEditProfile = document.querySelector ('.profile__edit-button')
+const buttonOpenAddCard = document.querySelector ('.profile__add-button')
 const profileName = document.querySelector('.profile__name')
 const profileJob = document.querySelector('.profile__job')
 const nameInput = document.querySelector('.popup__field-name')
 const jobInput = document.querySelector('.popup__field-job')
-const buttonOpenAddCard = document.querySelector ('.profile__add-button')
+const avatarEditForm = '.popup_edit-profile-avatar';
 const profileForm = '.popup_profile-edit';
 const addCardForm = '.popup_add-card';
 const imageForm = '.popup_image';
 
 const user = new UserInfo({
     profileName,
-    profileJob
+    profileJob,
+    profileAvatarImage
 });
 
 const popupImage = new PopupWithImage(imageForm);
 const formEditProfileValidate = new FormValidator(settings, '.popup__container_profile-edit');
+const formEditProfileAvatarValidate = new FormValidator(settings, '.popup__container_edit-profile-avatar');
 const formNewPlaceValidate = new FormValidator(settings, '.popup__container_new-place');
+
+const api = new Api({
+    url: "https://mesto.nomoreparties.co/v1/cohort-20/",
+    headers: {
+        'content-type': 'application/json',
+        'authorization': '80281606-7e64-45b0-a996-6277fb44273c',
+    }
+})
+
+const promises = [api.getUserInfo()];
+
+Promise.all(promises)
+	.then(([resUserData]) => {
+    user.setUserInfo(resUserData._id, resUserData.name, resUserData.about, resUserData.avatar);
+	})
+	.catch((error) => {
+		console.log(error);
+	});
 
 const formEditProfileClass = new PopupWithForm({
     popupSelector: profileForm,
     handleSubmitForm: (input) => {
-        user.setUserInfo(input['name'], input['job']);
-        formEditProfileClass.close();
+        api.setUserInfo({
+            name: input['name'],
+            about: input['job']
+        })
+        .then(data => {
+            user.setUserInfo(data._id, data.name, data.about, data.avatar);
+            formEditProfileClass.close();
+        })
     }
 });
+
+const formEditProfileAvatarClass = new PopupWithForm({
+    popupSelector: avatarEditForm,
+    handleSubmitForm: (input) => {
+        api.updateAvatar(input['avatar-edit'])
+        .then(data => {
+            user.setUserInfo(data._id, data.name, data.about, data.avatar);
+
+        formEditProfileAvatarClass.close();
+      });
+  
+    }
+});
+
 
 const formAddCardClass = new PopupWithForm({
     popupSelector: addCardForm,
@@ -63,12 +110,12 @@ const createCard = (item) => {
 
         handleCardClick: () => {
         popupImage.open(item.name, item.link);
-      }
+    }
     });
   
     const card = cardInstance.generateCard();
     return card;
-  };
+};
 
 const cardList = new Section({
     data: initialCards,
@@ -78,6 +125,11 @@ const cardList = new Section({
     }
 },  cardsList
 );
+
+profileAvatar.addEventListener('click', () => {
+    formEditProfileAvatarClass.open();
+    inputAvatarImage.value = user.getUserInfo().profileAvatarImage.src;
+})
 
 buttonOpenEditProfile.addEventListener('click', () => {
     formEditProfileClass.open();
@@ -92,9 +144,11 @@ buttonOpenAddCard.addEventListener('click', () => {
 
 formEditProfileValidate.enableValidation();
 formNewPlaceValidate.enableValidation();
+formEditProfileAvatarValidate.enableValidation();
 
 formAddCardClass.setEventListeners();
 formEditProfileClass.setEventListeners();
+formEditProfileAvatarClass.setEventListeners();
 popupImage.setEventListeners();
 
 cardList.renderItems();
