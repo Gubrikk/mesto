@@ -1,5 +1,5 @@
 export default class Card {
-    constructor(data, cardSelector, {handleCardClick}) {
+    constructor(data, cardSelector, {handleCardClick, userData}) {
         this._name = data.name;
         this._link = data.link;
         this._cardSelector = cardSelector;
@@ -7,6 +7,8 @@ export default class Card {
         this._element = this._getTemplate();
         this._cardImage = this._element.querySelector('.element__image');
         this._cardLike = this._element.querySelector('.element__info-like');
+        this._data = data;
+        this._userData = userData;
     }
 
     _getTemplate() {

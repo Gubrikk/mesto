@@ -52,11 +52,13 @@ const api = new Api({
     }
 })
 
-const promises = [api.getUserInfo()];
+const promises = [api.getInitialCards(), api.getUserInfo()];
 
 Promise.all(promises)
-	.then(([resUserData]) => {
+	.then(([resCardData, resUserData]) => {
     user.setUserInfo(resUserData._id, resUserData.name, resUserData.about, resUserData.avatar);
+    cardList.setRenderedItems(resCardData);
+    cardList.renderItems(resUserData);
 	})
 	.catch((error) => {
 		console.log(error);
@@ -81,7 +83,7 @@ const formEditProfileAvatarClass = new PopupWithForm({
     handleSubmitForm: (input) => {
         api.updateAvatar(input['avatar-edit'])
         .then(data => {
-            user.setUserInfo(data._id, data.name, data.about, data.avatar);
+        user.setUserInfo(data._id, data.name, data.about, data.avatar);
 
         formEditProfileAvatarClass.close();
       });
@@ -90,18 +92,20 @@ const formEditProfileAvatarClass = new PopupWithForm({
 });
 
 
+
 const formAddCardClass = new PopupWithForm({
     popupSelector: addCardForm,
     handleSubmitForm: (input) => {
-        const cardData = {
+        api.addNewCard({
             name: input['new-place'],
             link: input['link-image']
-        }
-        
-        const cardElement = createCard(cardData)
-        cardList.addNewItem(cardElement);
-  
-        formAddCardClass.close();
+        })
+        .then(data => {
+            const cardElement = createCard(data, '.template', user.getUserInfo());
+            cardList.addNewItem(cardElement);
+
+            formAddCardClass.close();
+        });
     }
 });
 
@@ -119,8 +123,8 @@ const createCard = (item) => {
 
 const cardList = new Section({
     data: initialCards,
-    renderer: (item) => {
-        const cardElement = createCard(item)
+    renderer: (item, userData) => {
+        const cardElement = createCard(item, userData)
         cardList.addItem(cardElement);
     }
 },  cardsList

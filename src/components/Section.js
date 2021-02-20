@@ -5,9 +5,10 @@ export default class Section {
         this._container = containerSelector;
     }
     
-    renderItems() {
+    renderItems(userData) {
+        this._container.innerHTML = '';
         this._renderedItems.forEach(item => {
-        this._renderer(item); //userData
+            this._renderer(item, userData);
         });
     }
     
