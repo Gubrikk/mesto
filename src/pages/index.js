@@ -7,7 +7,6 @@ import FormValidator from '../components/FormValidator.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithRemoveCard from '../components/PopupWithRemoveCard.js'
-import {initialCards} from '../components/initialCards.js'
 
 const settings = {
     formSelector: '.popup__container',
@@ -69,33 +68,48 @@ Promise.all(promises)
 const formEditProfileClass = new PopupWithForm({
     popupSelector: profileForm,
     handleSubmitForm: (input) => {
+        formEditProfileClass.loading(true);
         api.setUserInfo({
             name: input['name'],
             about: input['job']
         })
         .then(data => {
             user.setUserInfo(data._id, data.name, data.about, data.avatar);
+        })
+        .catch((error) => {
+            console.log(error);
+          })
+        .finally(() => {
+            formEditProfileClass.loading(false, 'Сохранить');
             formEditProfileClass.close();
         })
+        
     }
 });
 
 const formEditProfileAvatarClass = new PopupWithForm({
     popupSelector: avatarEditForm,
     handleSubmitForm: (input) => {
+        formEditProfileAvatarClass.loading(true);
         api.updateAvatar(input['avatar-edit'])
         .then(data => {
         user.setUserInfo(data._id, data.name, data.about, data.avatar);
 
-        formEditProfileAvatarClass.close();
-      });
-  
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .finally(() => {
+            formEditProfileAvatarClass.loading(false, 'Сохранить');
+            formEditProfileAvatarClass.close();
+        }) 
     }
 });
 
 const formAddCardClass = new PopupWithForm({
     popupSelector: addCardForm,
     handleSubmitForm: (input) => {
+        formAddCardClass.loading(true)
         api.addNewCard({
             name: input['new-place'],
             link: input['link-image']
@@ -105,14 +119,21 @@ const formAddCardClass = new PopupWithForm({
             const cardElement = card.generateCard();
             cardList.addNewItem(cardElement);
 
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .finally(() => {
+            formAddCardClass.loading(false, 'Сохранить');
             formAddCardClass.close();
-        });
+        }) 
     }
 });
 
 const formDeleteCard = new PopupWithRemoveCard({
 	popupSelector: removeCardForm,
 	handleSubmitForm: ( {element, cardId} ) => {
+        formDeleteCard.loading(true);
 		api.deleteCard(cardId)
         .then(() => {
             element.remove();
@@ -120,7 +141,11 @@ const formDeleteCard = new PopupWithRemoveCard({
         })
         .catch((error) => {
             console.log(error);
-        });
+        })
+        .finally(() => {
+            formDeleteCard.loading(false, 'Сохранить');
+            formDeleteCard.close();
+        })
 	}
 });
 
@@ -159,7 +184,6 @@ const createCard = function (data, cardSelector, userData) {
 };
   
 const cardList = new Section({
-    data: initialCards,
         renderer: (item, userData) => {
             const card = createCard(item, '.template', userData);
             const cardElement = card.generateCard();
@@ -194,4 +218,3 @@ formEditProfileAvatarClass.setEventListeners();
 popupImage.setEventListeners();
 formDeleteCard.setEventListeners();
 
-cardList.renderItems();
