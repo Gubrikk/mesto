@@ -20,9 +20,4 @@ export default class PopupWithRemoveCard extends Popup {
         this._cardId = data;
     }
 
-    close() {
-        super.close();
-        this._form.reset();
-    }
-
 }

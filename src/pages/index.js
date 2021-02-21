@@ -189,7 +189,6 @@ const cardList = new Section({
 
 profileAvatar.addEventListener('click', () => {
     formEditProfileAvatarClass.open();
-    inputAvatarImage.value = user.getUserInfo().profileAvatarImage.src;
 })
 
 buttonOpenEditProfile.addEventListener('click', () => {

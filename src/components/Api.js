@@ -3,17 +3,19 @@
         this._url = config.url;
         this._headers = config.headers;
     }
-  
+    
+    _checkResponse(res) {
+        if (res.ok) {
+            return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
+    }
+ 
     getUserInfo() {
         return fetch(`${this._url}users/me`, {
             headers: this._headers
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-            })
+            .then(this._checkResponse)
             .catch((err) => {
                 console.log(err);
             });
@@ -28,12 +30,7 @@
                 about: data.about
             })
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-            })
+            .then(this._checkResponse)
             .catch((err) => {
                 console.log(err);
             });
@@ -47,14 +44,9 @@
             avatar: avatar
             })
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
-        .catch((err) => {
-            console.log(err);
+            .then(this._checkResponse)
+            .catch((err) => {
+                console.log(err);
         });
     }
 
@@ -62,14 +54,9 @@
         return fetch(`${this._url}cards`, {
             headers: this._headers
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-        })
-        .catch((err) => {
-            console.log(err);
+            .then(this._checkResponse)
+            .catch((err) => {
+                console.log(err);
         });
     }
 
@@ -82,14 +69,9 @@
             link: data.link
             })
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
-        .catch((err) => {
-            console.log(err);
+            .then(this._checkResponse)
+            .catch((err) => {
+                console.log(err);
         });
     }
   
@@ -98,14 +80,9 @@
             method: 'DELETE',
             headers: this._headers
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
-        .catch((err) => {
-            console.log(err);
+            .then(this._checkResponse)
+            .catch((err) => {
+                console.log(err);
         });
     }
 
@@ -114,14 +91,9 @@
             method: 'PUT',
             headers: this._headers
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-        }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
-        .catch((err) => {
-            console.log(err);
+            .then(this._checkResponse)
+            .catch((err) => {
+                console.log(err);
         });
     }
     
@@ -130,14 +102,9 @@
             method: 'DELETE',
             headers: this._headers
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
-        .catch((err) => {
-            console.log(err);
+            .then(this._checkResponse)
+            .catch((err) => {
+                console.log(err);
         });
     }
 }
