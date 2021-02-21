@@ -133,7 +133,6 @@ const formAddCardClass = new PopupWithForm({
 const formDeleteCard = new PopupWithRemoveCard({
 	popupSelector: removeCardForm,
 	handleSubmitForm: ( {element, cardId} ) => {
-        formDeleteCard.loading(true);
 		api.deleteCard(cardId)
         .then(() => {
             element.remove();
@@ -141,10 +140,6 @@ const formDeleteCard = new PopupWithRemoveCard({
         })
         .catch((error) => {
             console.log(error);
-        })
-        .finally(() => {
-            formDeleteCard.loading(false, 'Сохранить');
-            formDeleteCard.close();
         })
 	}
 });
