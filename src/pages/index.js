@@ -6,7 +6,8 @@ import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
-import {initialCards} from '../components/initialCards.js';
+import PopupWithRemoveCard from '../components/PopupWithRemoveCard.js'
+import {initialCards} from '../components/initialCards.js'
 
 const settings = {
     formSelector: '.popup__container',
@@ -28,6 +29,7 @@ const profileName = document.querySelector('.profile__name')
 const profileJob = document.querySelector('.profile__job')
 const nameInput = document.querySelector('.popup__field-name')
 const jobInput = document.querySelector('.popup__field-job')
+const removeCardForm = '.popup_delete-card';
 const avatarEditForm = '.popup_edit-profile-avatar';
 const profileForm = '.popup_profile-edit';
 const addCardForm = '.popup_add-card';
@@ -91,8 +93,6 @@ const formEditProfileAvatarClass = new PopupWithForm({
     }
 });
 
-
-
 const formAddCardClass = new PopupWithForm({
     popupSelector: addCardForm,
     handleSubmitForm: (input) => {
@@ -101,7 +101,8 @@ const formAddCardClass = new PopupWithForm({
             link: input['link-image']
         })
         .then(data => {
-            const cardElement = createCard(data, '.template', user.getUserInfo());
+            const card = createCard(data, '.template', user.getUserInfo());
+            const cardElement = card.generateCard();
             cardList.addNewItem(cardElement);
 
             formAddCardClass.close();
@@ -109,26 +110,63 @@ const formAddCardClass = new PopupWithForm({
     }
 });
 
-const createCard = (item) => {
-    const cardInstance = new Card(item, '.template', {
+const formDeleteCard = new PopupWithRemoveCard({
+	popupSelector: removeCardForm,
+	handleSubmitForm: ( {element, cardId} ) => {
+		api.deleteCard(cardId)
+        .then(() => {
+            element.remove();
+            formDeleteCard.close();
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+	}
+});
 
-        handleCardClick: () => {
-        popupImage.open(item.name, item.link);
-    }
+const createCard = function (data, cardSelector, userData) {
+    const card = new Card(
+        data,
+        cardSelector,{
+            handleCardClick: (name, link) => {
+                popupImage.open(name, link);
+            },
+            handleDeleteCard: (element, cardId) => {
+                formDeleteCard.open({ element, cardId });
+            },
+            handleLikeClick: (cardId) => {
+            if(card.isCardLiked()) {
+                api.deleteLikeCard(cardId)
+                .then((data) => {
+                    card.setCardLiked(data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            } else {
+                api.addLikeCard(cardId)
+                .then((data) => {
+                    card.setCardLiked(data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            }
+        },
+        userData: userData
     });
-  
-    const card = cardInstance.generateCard();
     return card;
 };
-
+  
 const cardList = new Section({
     data: initialCards,
-    renderer: (item, userData) => {
-        const cardElement = createCard(item, userData)
-        cardList.addItem(cardElement);
-    }
-},  cardsList
-);
+        renderer: (item, userData) => {
+            const card = createCard(item, '.template', userData);
+            const cardElement = card.generateCard();
+            cardList.addItem(cardElement);
+        }
+    }, cardsList);
+
 
 profileAvatar.addEventListener('click', () => {
     formEditProfileAvatarClass.open();
@@ -154,5 +192,6 @@ formAddCardClass.setEventListeners();
 formEditProfileClass.setEventListeners();
 formEditProfileAvatarClass.setEventListeners();
 popupImage.setEventListeners();
+formDeleteCard.setEventListeners();
 
 cardList.renderItems();

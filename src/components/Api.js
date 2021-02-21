@@ -93,4 +93,51 @@
         });
     }
   
+    deleteCard(card) {
+        return fetch(`${this._url}cards/${card}`, {
+            method: 'DELETE',
+            headers: this._headers
+        })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }
+
+    addLikeCard(card) {
+        return fetch(`${this._url}cards/likes/${card}`, {
+            method: 'PUT',
+            headers: this._headers
+        })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+        }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }
+    
+    deleteLikeCard(card) {
+        return fetch(`${this._url}cards/likes/${card}`, {
+            method: 'DELETE',
+            headers: this._headers
+        })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }
 }

@@ -1,5 +1,4 @@
 .element__info {
-    display: flex;
-    justify-content: space-between;
-    max-width: 260px;
+    text-align: center;
+    margin-right: 20px;
 }
